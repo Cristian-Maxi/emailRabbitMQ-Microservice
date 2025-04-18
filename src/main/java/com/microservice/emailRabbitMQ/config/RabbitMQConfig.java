@@ -17,10 +17,16 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public class RabbitMQConfig {
 
     public static final String QUEUE = "accreditation_created_queue";
+    public static final String USER_QUEUE = "user_registered_queue";
 
     @Bean
     public Queue accreditationsCreatedQueue() {
         return new Queue(QUEUE);
+    }
+
+    @Bean
+    public Queue userRegisteredQueue() {
+        return new Queue(USER_QUEUE);
     }
 
     @Bean

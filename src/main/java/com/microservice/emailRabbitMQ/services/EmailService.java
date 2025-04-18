@@ -6,6 +6,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.microservice.emailRabbitMQ.config.RabbitMQConfig;
 import com.microservice.emailRabbitMQ.utils.AccreditationCreatedEvent;
+import com.microservice.emailRabbitMQ.utils.UserRegisteredEvent;
 import jakarta.mail.MessagingException;
 
 import jakarta.mail.internet.MimeMessage;
@@ -74,6 +75,31 @@ public class EmailService {
         } catch (MessagingException e) {
             e.printStackTrace();
             System.err.println("Error sending email: " + e.getMessage());
+        }
+    }
+
+    @RabbitListener(queues = RabbitMQConfig.USER_QUEUE)
+    public void handleUserRegisteredEvent(UserRegisteredEvent event) {
+        sendWelcomeEmail(event.getEmail(), event.getName(), event.getLastname());
+    }
+
+    private void sendWelcomeEmail(String email, String name, String lastname) {
+        String subject = "Welcome to Our Service!";
+        String body = "Hi " + name + " " + lastname + ",\n\nThank you for registering with us. We are excited to have you on board!\n\nBest regards,\nThe Team";
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body);
+
+            mailSender.send(message);
+            System.out.println("Welcome email sent to " + email);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.err.println("Error sending welcome email: " + e.getMessage());
         }
     }
 }
