@@ -53,7 +53,7 @@ public class EmailService {
         }
     }
     private void sendEmailWithPdf(AccreditationCreatedEvent event) {
-        String recipientEmail = "cristian@outlook";
+        String recipientEmail = event.getEmail();
         String subject = "Accreditation Confirmation - ID: " + event.getId();
         String body = "Attached is the PDF for your recent accreditation.";
 
