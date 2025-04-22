@@ -32,7 +32,7 @@ public class EmailService {
         sendEmailWithPdf(event);
     }
 
-    private void generateAccreditationPdf(AccreditationCreatedEvent event) {
+    public void generateAccreditationPdf(AccreditationCreatedEvent event) {
         try (PdfWriter writer = new PdfWriter("accreditation_" + event.getId() + ".pdf")) {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
@@ -52,7 +52,7 @@ public class EmailService {
             System.err.println("Error generating PDF: " + e.getMessage());
         }
     }
-    private void sendEmailWithPdf(AccreditationCreatedEvent event) {
+    public void sendEmailWithPdf(AccreditationCreatedEvent event) {
         String recipientEmail = event.getEmail();
         String subject = "Accreditation Confirmation - ID: " + event.getId();
         String body = "Attached is the PDF for your recent accreditation.";
@@ -83,7 +83,7 @@ public class EmailService {
         sendWelcomeEmail(event.getEmail(), event.getName(), event.getLastname());
     }
 
-    private void sendWelcomeEmail(String email, String name, String lastname) {
+    public void sendWelcomeEmail(String email, String name, String lastname) {
         String subject = "Welcome to Our Service!";
         String body = "Hi " + name + " " + lastname + ",\n\nThank you for registering with us. We are excited to have you on board!\n\nBest regards,\nThe Team";
 
