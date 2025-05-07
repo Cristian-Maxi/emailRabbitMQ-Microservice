@@ -25,6 +25,7 @@ Este proyecto es una implementación de una arquitectura de microservicios basad
 - H2 Database (Testing)
 - Jacoco + informe en HTML
 - SonarQube (Revisión de cobertura)
+- Zipkin (Para Trazabilidad)
 
 ## 📌 Microservicio: EmailRabbitMQs
 
